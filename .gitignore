@@ -1,0 +1,38 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Secrets — copy config.h.example to config.h and fill in your credentials
+include/config.h
+
+# VSCode
+.vscode/
+
+# Build artifacts
+build/
+dist/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor temps
+*.swp
+*.swo
+*~
+
+# Archives
+*.zip
+*.tar.gz
