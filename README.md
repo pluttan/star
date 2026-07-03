@@ -1,15 +1,8 @@
-![Header](header.png)
-
 <div align="center">
 
 # star
 
 **WS2812B LED strip controller with 23 effects and OTA updates for ESP32-C3**
-
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![ESP32-C3](https://img.shields.io/badge/ESP32--C3-RISC--V-2C2C2C?style=for-the-badge&logo=espressif&labelColor=1E1E1E)]()
-[![NeoPixelBus](https://img.shields.io/badge/NeoPixelBus-2.7-2C2C2C?style=for-the-badge&labelColor=1E1E1E)]()
-[![PlatformIO](https://img.shields.io/badge/PlatformIO-build-2C2C2C?style=for-the-badge&logo=platformio&labelColor=1E1E1E)]()
 
 </div>
 
@@ -29,6 +22,8 @@ WS2812B addressable LED strip controller running on ESP32-C3 with a self-contain
 
 ## ■ Stack
 
+<div align="center">
+
 | Component | Technology |
 |-----------|------------|
 | MCU | ESP32-C3 (RISC-V) |
@@ -40,13 +35,17 @@ WS2812B addressable LED strip controller running on ESP32-C3 with a self-contain
 | Build | PlatformIO |
 | Interface | Built-in synchronous WebServer (HTTP) |
 
-## ■ Wiring
+</div>
 
-| ESP32-C3 | WS2812B |
-|----------|---------|
-| GPIO 3 | DIN |
-| 5V | VCC |
-| GND | GND |
+## ■ How It Works
+
+```
+1. On boot, ESP32-C3 connects to the configured WiFi network; if unavailable, it starts an AP (LED-Star) for standalone access.
+2. The built-in HTTP WebServer serves a self-contained page at the static IP (192.168.1.252) with color picker, brightness/speed sliders, and effect groups.
+3. The selected effect is rendered on the WS2812B strip via NeoPixelBus using the RMT peripheral.
+4. All settings (effect, brightness, speed, color, palette, auto-cycle interval) are persisted to EEPROM and restored on the next boot.
+5. Firmware can be updated over WiFi via ArduinoOTA (espota, port 3232) or HTTP file upload to /api/update.
+```
 
 ## ■ Usage
 
@@ -68,6 +67,18 @@ python3 ota_upload.py .pio/build/esp32c3/firmware.bin [ip]
 ```
 
 Configuration is in `include/config.h` — WiFi credentials, static IP, AP fallback, OTA hostname, EEPROM layout. LED pin (GPIO 3) and LED count are set via `build_flags` in `platformio.ini`.
+
+## ■ Wiring
+
+<div align="center">
+
+| ESP32-C3 | WS2812B |
+|----------|---------|
+| GPIO 3 | DIN |
+| 5V | VCC |
+| GND | GND |
+
+</div>
 
 ## ■ License
 
