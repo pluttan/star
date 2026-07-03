@@ -1,15 +1,8 @@
-![Header](header.png)
-
 <div align="center">
 
 # star
 
 **Контроллер светодиодной ленты WS2812B с 23 эффектами и OTA-обновлениями для ESP32-C3**
-
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![ESP32-C3](https://img.shields.io/badge/ESP32--C3-RISC--V-2C2C2C?style=for-the-badge&logo=espressif&labelColor=1E1E1E)]()
-[![NeoPixelBus](https://img.shields.io/badge/NeoPixelBus-2.7-2C2C2C?style=for-the-badge&labelColor=1E1E1E)]()
-[![PlatformIO](https://img.shields.io/badge/PlatformIO-build-2C2C2C?style=for-the-badge&logo=platformio&labelColor=1E1E1E)]()
 
 </div>
 
@@ -31,7 +24,7 @@
 
 <div align="center">
 
-| Компонент | Technology |
+| Компонент | Технология |
 |-----------|------------|
 | МК | ESP32-C3 (RISC-V) |
 | Лента | WS2812B (RMT-driven, configurable count) |
@@ -44,19 +37,17 @@
 
 </div>
 
-## ■ Подключение
+## ■ Как это работает
 
-<div align="center">
+```
+1. При загрузке ESP32-C3 подключается к настроенной WiFi-сети; если она недоступна, запускает точку доступа (LED-Star) для автономной работы.
+2. Встроенный HTTP WebServer отдаёт самодостаточную страницу по статическому IP (192.168.1.252) с палитрой цветов, ползунками яркости/скорости и группами эффектов.
+3. Выбранный эффект отрисовывается на ленте WS2812B через NeoPixelBus с использованием периферии RMT.
+4. Все настройки (эффект, яркость, скорость, цвет, палитра, интервал автосмены) сохраняются в EEPROM и восстанавливаются при следующей загрузке.
+5. Прошивку можно обновить по WiFi через ArduinoOTA (espota, порт 3232) или загрузив файл по HTTP на /api/update.
+```
 
-| ESP32-C3 | WS2812B |
-|----------|---------|
-| GPIO 3 | DIN |
-| 5V | VCC |
-| GND | GND |
-
-</div>
-
-## ■ Запуск
+## ■ Использование
 
 ```bash
 # Сборка, загрузка через USB и открытие монитора порта
@@ -77,6 +68,18 @@ python3 ota_upload.py .pio/build/esp32c3/firmware.bin [ip]
 
 Конфигурация находится в `include/config.h` — учётные данные WiFi, статический IP, резервная точка доступа, OTA-имя хоста, разметка EEPROM. Пин LED (GPIO 3) и количество светодиодов задаются через `build_flags` в `platformio.ini`.
 
-## ■ License
+## ■ Подключение
+
+<div align="center">
+
+| ESP32-C3 | WS2812B |
+|----------|---------|
+| GPIO 3 | DIN |
+| 5V | VCC |
+| GND | GND |
+
+</div>
+
+## ■ Лицензия
 
 MIT © [pluttan](https://github.com/pluttan)
